@@ -26,6 +26,8 @@ class MainWindow(QWidget):
         self.available_window_width = QApplication.primaryScreen().availableGeometry().width()
         self.available_window_height = QApplication.primaryScreen().availableGeometry().height()
 
+        self.chosed_session = ""
+
         # calling methods
         self.interface_configurations()
         self.user_interface()
@@ -40,6 +42,8 @@ class MainWindow(QWidget):
         self.header_layout = QHBoxLayout()
         self.header_layout.setAlignment(Qt.AlignTop)
         self.activate_webtracker_layout = QVBoxLayout()
+        self.default_session_layout = QHBoxLayout()
+        self.custom_session_layout = QHBoxLayout()
 
         # widgets declaration
         self.application_name = QLabel()
@@ -84,17 +88,30 @@ class MainWindow(QWidget):
         self.load_default_session_button.setFont(self.master_font)
         self.load_default_session_button.setText("Load Default Session")
         self.load_default_session_button.setFlat(True)
-        self.load_default_session_button.setMinimumSize(int(self.width() / 4), int(self.height() / 20))
+        self.load_default_session_button.setMinimumSize(int(self.width() / 3.5), int(self.height() / 20))
         self.load_default_session_button.clicked.connect(self.load_default_session_button_clicked)
         self.load_default_session_button.setStyleSheet("""QPushButton{border-radius: 5px; background-color: #021c59; color: white;}""")
+
+        self.initialize_default_session_checkbox = QPushButton()
+        self.initialize_default_session_checkbox.setFont(self.master_font_x)
+        self.initialize_default_session_checkbox.clicked.connect(self.select_default_session)
+        self.initialize_default_session_checkbox.setFixedSize(int(self.width() / 22), int(self.height() / 22))
+        self.initialize_default_session_checkbox.setStyleSheet("""QPushButton{border-radius: 5px; background-color: #021c59; color: white; padding-bottom: 3px;}""")
 
         self.load_custom_session_button = QPushButton()
         self.load_custom_session_button.setText("Load Custom Session")
         self.load_custom_session_button.setFont(self.master_font)
         self.load_custom_session_button.setFlat(True)
         self.load_custom_session_button.clicked.connect(self.load_custom_session_button_clicked)
-        self.load_custom_session_button.setMinimumSize(int(self.width() / 4), int(self.height() / 20))
+        self.load_custom_session_button.setMinimumSize(int(self.width() / 3.5), int(self.height() / 20))
         self.load_custom_session_button.setStyleSheet("""QPushButton{border-radius: 5px; background-color: #021c59; color: white;}""")
+
+        self.initialize_custom_session_checkbox = QPushButton()
+        self.initialize_custom_session_checkbox.setFont(self.master_font_x)
+        self.initialize_custom_session_checkbox.clicked.connect(self.select_custom_session)
+        self.initialize_custom_session_checkbox.setFixedSize(int(self.width() / 22), int(self.height() / 22))
+        self.initialize_custom_session_checkbox.setStyleSheet("""QPushButton{border-radius: 5px; background-color: #021c59;
+        color: white; padding-bottom: 3px;}""")
 
         # adding widgets to layouts
         self.header_layout.addSpacing(40)
@@ -104,13 +121,22 @@ class MainWindow(QWidget):
         self.header_layout.addWidget(self.master_settings_button)
         self.header_layout.addSpacing(40)
 
+        self.default_session_layout.addStretch()
+        self.default_session_layout.addWidget(self.load_default_session_button)
+        self.default_session_layout.addWidget(self.initialize_default_session_checkbox)
+        self.default_session_layout.addStretch()
+        self.custom_session_layout.addStretch()
+        self.custom_session_layout.addWidget(self.load_custom_session_button)
+        self.custom_session_layout.addWidget(self.initialize_custom_session_checkbox)
+        self.custom_session_layout.addStretch()
+
         self.activate_webtracker_layout.addSpacing(40)
         self.activate_webtracker_layout.addWidget(self.activate_webtracker_with_default_configs_label, alignment=Qt.AlignHCenter | Qt.AlignTop)
         self.activate_webtracker_layout.addSpacing(40)
         self.activate_webtracker_layout.addWidget(self.activate_webtracker_and_blocker_button, alignment=Qt.AlignHCenter | Qt.AlignTop)
         self.activate_webtracker_layout.addSpacing(40)
-        self.activate_webtracker_layout.addWidget(self.load_default_session_button, alignment=Qt.AlignHCenter | Qt.AlignTop)
-        self.activate_webtracker_layout.addWidget(self.load_custom_session_button, alignment=Qt.AlignHCenter | Qt.AlignTop)
+        self.activate_webtracker_layout.addLayout(self.default_session_layout)
+        self.activate_webtracker_layout.addLayout(self.custom_session_layout)
 
         # adding child layouts to parent layouts and setting the master layout as window layout
         self.master_layout.addLayout(self.header_layout)
@@ -139,6 +165,24 @@ class MainWindow(QWidget):
         self.master_screen = options_screen.MainWindow()
         self.master_screen.show()
         self.close()
+
+    def select_default_session(self):
+        if self.chosed_session == "custom":
+            self.chosed_session = "default"
+            self.initialize_custom_session_checkbox.setText("")
+            self.initialize_default_session_checkbox.setText("<>")
+        else:
+            self.chosed_session = "default"
+            self.initialize_default_session_checkbox.setText("<>")
+
+    def select_custom_session(self):
+        if self.chosed_session == "default":
+            self.chosed_session = "custom"
+            self.initialize_default_session_checkbox.setText("")
+            self.initialize_custom_session_checkbox.setText("<>")
+        else:
+            self.chosed_session = "custom"
+            self.initialize_custom_session_checkbox.setText("<>")
 
 
 def main():
