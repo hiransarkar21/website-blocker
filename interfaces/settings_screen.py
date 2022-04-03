@@ -126,7 +126,7 @@ class MainWindow(QWidget):
 
         self.get_new_entry = QLineEdit()
         self.get_new_entry.setFont(self.master_font)
-        self.get_new_entry.setFixedSize(int(self.width() / 2.5), int(self.height() / 20))
+        self.get_new_entry.setFixedSize(int(self.width() / 2.5), int(self.height() / 22))
         self.get_new_entry.setStyleSheet("""QLineEdit{border: 1px solid #828790; border-radius: 2px; padding-right: 10px;
                 padding-left: 10px;}""")
 
