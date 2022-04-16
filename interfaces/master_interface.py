@@ -27,6 +27,7 @@ class MainWindow(QWidget):
         self.available_window_height = QApplication.primaryScreen().availableGeometry().height()
 
         self.chosed_session = ""
+        self.default_session_file = os.path.join(WINDOWS_DEFAULT_LOCATION, "default_session_blacklisted_websites.txt")
 
         # calling methods
         self.interface_configurations()
@@ -158,7 +159,15 @@ class MainWindow(QWidget):
         self.close()
 
     def load_default_session_button_clicked(self):
-        pass
+        if os.path.isfile(self.default_session_file):
+            with open(self.default_session_file, "r+") as default_session_file:
+                websites = default_session_file.readlines()
+                if len(websites) != 0:
+                    self.blacklisted_websites = [sites.strip("\n") for sites in websites]
+                else:
+                    self.master_settings_button_clicked()
+        else:
+            self.master_settings_button_clicked()
 
     def load_custom_session_button_clicked(self):
         from interfaces import options_screen
