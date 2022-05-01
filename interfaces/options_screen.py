@@ -274,10 +274,12 @@ class MainWindow(QWidget):
     def load_custom_session_entries(self):
         # loading custom session blacklisted websites from custom_session_blacklisted_websites.txt
 
-        with open(self.custom_session_file, "r") as custom_file:
-            lines_from_file = custom_file.readlines()
-            for entry in lines_from_file:
-                self.blacklisted_website_container.addItem(entry.strip("\n"))
+        # with open(self.custom_session_file, "r") as custom_file:
+        #     lines_from_file = custom_file.readlines()
+        #     for entry in lines_from_file:
+        #         self.blacklisted_website_container.addItem(entry.strip("\n"))
+
+        pass
 
     def master_interface_button_clicked(self):
         from interfaces import master_interface
@@ -348,13 +350,15 @@ class MainWindow(QWidget):
 
     def save_entries_button_clicked(self):
         # storing all the active items to the variable all_entries_from_container
-        self.all_entries_from_container = []
+        # self.all_entries_from_container = []
+        #
+        # for i in range(self.blacklisted_website_container.count()):
+        #     self.all_entries_from_container.append(self.blacklisted_website_container.item(i).text())
+        #
+        # # writing the entries into custom_session_file location in APPDATA/WebTrackerX/
+        # with open(self.custom_session_file, "w+") as custom_session_file:
+        #     for entry in self.all_entries_from_container:
+        #         custom_session_file.write(entry.__add__("\n"))
 
-        for i in range(self.blacklisted_website_container.count()):
-            self.all_entries_from_container.append(self.blacklisted_website_container.item(i).text())
-
-        # writing the entries into custom_session_file location in APPDATA/WebTrackerX/
-        with open(self.custom_session_file, "w+") as custom_session_file:
-            for entry in self.all_entries_from_container:
-                custom_session_file.write(entry.__add__("\n"))
+        pass
 
